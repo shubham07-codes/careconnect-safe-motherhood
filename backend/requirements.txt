@@ -22,3 +22,9 @@ uvicorn==0.52.3
 uvloop==0.22.1
 watchfiles==1.2.0
 websockets==17.0.1
+
+PyJWT>=2.10
+email-validator>=2.2
+python-multipart>=0.0.20
+pypdf>=5.0
+google-genai>=1.0
