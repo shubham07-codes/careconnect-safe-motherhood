@@ -17,6 +17,16 @@ from app.routes.mother.content import router as mother_content_router
 from app.routes.mother.dashboard import router as mother_dashboard_router
 from app.routes.officer.dashboard import router as officer_dashboard_router
 
+from app.routes.mother.reports import router as mother_reports_router
+from app.routes.mother.symptoms import router as mother_symptoms_router
+
+from app.routes.mother.ai_care import router as mother_ai_care_router
+from app.routes.mother.alerts import router as mother_alerts_router
+
+from app.routes.field_worker.alerts import router as field_worker_alerts_router
+from app.routes.doctor.prescriptions import router as doctor_prescriptions_router
+from app.routes.mother.medicines import router as mother_medicines_router
+from app.routes.mother.doctor_prep import router as mother_doctor_prep_router
 app = FastAPI(
     title=settings.app_name,
     description=(
@@ -47,6 +57,15 @@ app.include_router(mother_dashboard_router)
 app.include_router(mother_content_router)
 app.include_router(officer_dashboard_router)
 app.include_router(ai_router)
+app.include_router(mother_reports_router)
+app.include_router(mother_symptoms_router)
+app.include_router(mother_ai_care_router)
+app.include_router(mother_alerts_router)
+app.include_router(field_worker_alerts_router)
+app.include_router(doctor_prescriptions_router)
+app.include_router(mother_medicines_router)
+app.include_router(mother_doctor_prep_router)
+
 
 @app.get("/")
 def root():

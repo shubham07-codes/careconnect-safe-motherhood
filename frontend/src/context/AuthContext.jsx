@@ -1,67 +1,60 @@
 import { createContext, useContext, useState } from "react";
+import { loginUser, logoutUser } from "../services/authService";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    const saved = sessionStorage.getItem("careconnect_user");
-
-    return saved ? JSON.parse(saved) : null;
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
   });
 
-  const persist = (nextUser) => {
-    setUser(nextUser);
+  const login = async (email, password) => {
+  const data = await loginUser(
+    email,
+    password
+  );
 
-    sessionStorage.setItem(
-      "careconnect_user",
-      JSON.stringify(nextUser)
-    );
+  localStorage.setItem(
+    "access_token",
+    data.access_token
+  );
+
+  const loggedUser = {
+    user_id: data.user_id,
+    full_name: data.full_name,
+    role: data.role,
   };
 
-  const login = ({ name, email }) => {
-    persist({
-      name: name?.trim() || "Demo User",
-      email,
-      role: null,
-    });
-  };
+  localStorage.setItem(
+    "user",
+    JSON.stringify(loggedUser)
+  );
 
-  const register = ({ name, email }) => {
-    persist({
-      name,
-      email,
-      role: null,
-    });
-  };
+  setUser(loggedUser);
 
-  const selectRole = (role) => {
-    persist({
-      ...user,
-      role,
-    });
-  };
+  return loggedUser;
+};
 
   const logout = () => {
-    sessionStorage.removeItem("careconnect_user");
+    logoutUser();
     setUser(null);
   };
 
-  const value = {
-    user,
-    login,
-    register,
-    selectRole,
-    logout,
-  };
-
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        logout,
+        isAuthenticated: !!user,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 }
 
-// oxlint-disable-next-line react/only-export-components
 export function useAuth() {
   return useContext(AuthContext);
 }

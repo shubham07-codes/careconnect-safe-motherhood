@@ -1,6 +1,15 @@
-import { apiRequest } from "./api";
-export const authService = {
-  login: (payload) => apiRequest("/auth/login", { method: "POST", body: JSON.stringify(payload) }),
-  register: (payload) => apiRequest("/auth/register", { method: "POST", body: JSON.stringify(payload) }),
-  me: (token) => apiRequest("/auth/me", { headers: { Authorization: `Bearer ${token}` } }),
+import api from "./api";
+
+export const loginUser = async (email, password) => {
+  const response = await api.post("/api/auth/login", {
+    email,
+    password,
+  });
+
+  return response.data;
+};
+
+export const logoutUser = () => {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("user");
 };

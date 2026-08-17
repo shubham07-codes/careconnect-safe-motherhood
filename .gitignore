@@ -46,3 +46,9 @@ dist/
 # Local backups
 backend/app_before_phase3/
 frontend/src_backup/
+
+# Uploaded medical reports
+backend/uploads/
+
+# Uploaded medical files
+backend/uploads/

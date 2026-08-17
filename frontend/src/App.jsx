@@ -35,6 +35,7 @@ import MCHIndicators from "./pages/officer/MCHIndicators";
 import WardAnalytics from "./pages/officer/WardAnalytics";
 import RiskOverview from "./pages/officer/RiskOverview";
 import ImmunizationOverview from "./pages/officer/ImmunizationOverview";
+import AICare from "./pages/mother/AICare";
 
 const guard = (role, element) => <ProtectedRoute role={role}>{element}</ProtectedRoute>;
 
@@ -54,6 +55,7 @@ export default function App() {
       <Route path="/mother/reports" element={guard("mother", <MyReports />)} />
       <Route path="/mother/newborn" element={guard("mother", <Newborn />)} />
       <Route path="/mother/reminders" element={guard("mother", <Reminders />)} />
+      <Route path="/mother/ai-care" element={guard("mother", <AICare />)} />
 
       <Route path="/field-worker" element={guard("field_worker", <FieldWorkerDashboard />)} />
       <Route path="/field-worker/patients" element={guard("field_worker", <FieldPatients />)} />

@@ -1,0 +1,123 @@
+.ai-care-banner {
+  margin: 22px 0;
+  padding: 24px 26px;
+  border-radius: 22px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(224, 247, 243, 0.95),
+      rgba(255, 240, 244, 0.92)
+    );
+  border: 1px solid rgba(24, 131, 118, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ai-care-banner::after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  right: -60px;
+  top: -75px;
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.ai-care-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.ai-care-icon {
+  min-width: 52px;
+  width: 52px;
+  height: 52px;
+  border-radius: 17px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.85);
+  color: #177d72;
+  box-shadow: 0 8px 24px rgba(29, 91, 84, 0.08);
+}
+
+.ai-care-copy small {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #177d72;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+}
+
+.ai-care-copy h2 {
+  margin: 0 0 7px;
+  font-size: 22px;
+  color: #173f3b;
+}
+
+.ai-care-copy p {
+  margin: 0;
+  color: #607b78;
+  max-width: 660px;
+  line-height: 1.55;
+}
+
+.ai-care-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 13px;
+}
+
+.ai-care-features span {
+  padding: 6px 9px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #52706d;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.ai-care-open {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 13px;
+  padding: 12px 18px;
+  background: #177f73;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  box-shadow: 0 10px 25px rgba(23, 127, 115, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ai-care-open:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(23, 127, 115, 0.25);
+}
+
+@media (max-width: 760px) {
+  .ai-care-banner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ai-care-open {
+    justify-content: center;
+    width: 100%;
+  }
+}

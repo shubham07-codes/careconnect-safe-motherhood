@@ -1,5 +1,5 @@
 from datetime import date
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
@@ -21,6 +21,45 @@ from app.services.anc_service import (
 )
 
 router = APIRouter(prefix="/api/field-worker", tags=["Field Worker"])
+
+@router.get("/pregnancies")
+def list_pregnancies(
+    ward_id: int | None = Query(default=None),
+    db: Session = Depends(get_db),
+    _: User = Depends(require_roles("field_worker")),
+):
+    stmt = (
+        select(Pregnancy, Mother)
+        .join(Mother, Pregnancy.mother_id == Mother.id)
+        .where(Pregnancy.status == "active")
+    )
+
+    if ward_id is not None:
+        stmt = stmt.where(Mother.ward_id == ward_id)
+
+    rows = db.execute(
+        stmt.order_by(Mother.full_name)
+    ).all()
+
+    return {
+        "total": len(rows),
+        "patients": [
+            {
+                "mother_id": mother.id,
+                "pregnancy_id": pregnancy.id,
+                "mother_name": mother.full_name,
+                "phone": mother.phone,
+                "ward_id": mother.ward_id,
+                "pregnancy_week": calculate_pregnancy_week(
+                    pregnancy.lmp
+                ),
+                "edd": pregnancy.edd,
+                "risk_level": pregnancy.current_risk_level,
+                "status": pregnancy.status,
+            }
+            for pregnancy, mother in rows
+        ],
+    }
 
 @router.post(
     "/pregnancies",

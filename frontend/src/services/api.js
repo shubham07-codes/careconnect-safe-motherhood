@@ -1,18 +1,29 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api";
+import axios from "axios";
 
-export async function apiRequest(path, options = {}) {
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers || {}),
-    },
-  });
 
-  if (!response.ok) throw new Error(await response.text() || "API request failed");
+const api = axios.create({
+  baseURL:
+    import.meta.env.VITE_API_URL ||
+    "http://127.0.0.1:8000",
+});
 
-  const type = response.headers.get("content-type") || "";
-  return type.includes("application/json") ? response.json() : response.text();
-}
 
-export { API_BASE_URL };
+api.interceptors.request.use(
+  (config) => {
+
+    const token =
+      localStorage.getItem(
+        "access_token"
+      );
+
+    if (token) {
+      config.headers.Authorization =
+        `Bearer ${token}`;
+    }
+
+    return config;
+  }
+);
+
+
+export default api;
