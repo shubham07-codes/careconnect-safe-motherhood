@@ -1,8 +1,12 @@
 import "./VideoIntro.css";
 
-export default function VideoIntro({ onFinish }) {
+
+export default function VideoIntro({
+  onFinish,
+}) {
   return (
     <div className="video-intro">
+
       <video
         className="video-intro-player"
         src="/careconnect-intro.mp4"
@@ -11,11 +15,22 @@ export default function VideoIntro({ onFinish }) {
         playsInline
         preload="auto"
         controls={false}
+
         onEnded={onFinish}
+
+        onError={() => {
+          console.error(
+            "Intro video failed to load."
+          );
+
+          onFinish();
+        }}
+
         onContextMenu={(event) =>
           event.preventDefault()
         }
       />
+
     </div>
   );
 }

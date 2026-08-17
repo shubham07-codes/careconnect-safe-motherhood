@@ -28,6 +28,7 @@ import DoctorHighRisk from "./pages/doctor/HighRiskCases";
 import DoctorReports from "./pages/doctor/Reports";
 import DoctorAppointments from "./pages/doctor/Appointments";
 import DoctorReferrals from "./pages/doctor/Referrals";
+import DoctorPrescriptions from "./pages/doctor/Prescriptions";
 import PostnatalCases from "./pages/doctor/PostnatalCases";
 
 import OfficerDashboard from "./pages/officer/OfficerDashboard";
@@ -72,6 +73,7 @@ export default function App() {
       <Route path="/doctor/appointments" element={guard("doctor", <DoctorAppointments />)} />
       <Route path="/doctor/referrals" element={guard("doctor", <DoctorReferrals />)} />
       <Route path="/doctor/postnatal" element={guard("doctor", <PostnatalCases />)} />
+      <Route path="/doctor/prescriptions" element={guard("doctor", <DoctorPrescriptions />)} />
 
       <Route path="/officer" element={guard("officer", <OfficerDashboard />)} />
       <Route path="/officer/indicators" element={guard("officer", <MCHIndicators />)} />
