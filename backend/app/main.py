@@ -93,7 +93,13 @@ def health_check():
         }
 
     except SQLAlchemyError as error:
-        print("Database connection error:", error)
+        error_text = str(error)
+
+        print(
+            "Database connection error:",
+            error_text,
+            flush=True,
+        )
 
         return JSONResponse(
             status_code=503,
@@ -102,5 +108,7 @@ def health_check():
                 "api": "running",
                 "database": "disconnected",
                 "service": "CareConnect",
+                "error_type": type(error).__name__,
+                "error": error_text,
             },
         )
